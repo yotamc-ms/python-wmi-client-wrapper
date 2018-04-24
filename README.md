@@ -5,7 +5,7 @@ NOTE: This repo contains a fork from [python-wmi-client-wrapper](https://github.
 To install this forked version:
 
 ```
-pip install wmi-client-wrapper
+pip install wmi-client-wrapper-py3
 ```
 
 The rest of this README is verbatim of the original repo.

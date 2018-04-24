@@ -24,7 +24,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='2018.2',
+    version='2018.3',
 
     description='A fork of Bryan Bishop\'s wmi-client-wrapper extended to include Python3 support',
     long_description=long_description,

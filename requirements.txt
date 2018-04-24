@@ -3,3 +3,6 @@ mock
 
 # because pass-through
 sh
+
+# to assist with Python2/3 compatibility
+future==0.16.0

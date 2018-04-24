@@ -1,4 +1,16 @@
-# python-wmi-client-wrapper
+# python-wmi-client-wrapper (forked for Python3 support)
+
+NOTE: This repo contains a fork from [python-wmi-client-wrapper](https://github.com/kanzure/python-wmi-client-wrapper) by [kanzure](https://github.com/kanzure); the only modifications are the addition of Python3 support.
+
+To install this forked version:
+
+```
+pip install wmi-client-wrapper
+```
+
+The rest of this README is verbatim of the original repo.
+
+---
 
 This is a wrapper around wmi-client for Linux. Apparently the python-wmi module
 uses Windows APIs to access WMI, which isn't something that is going to work on

@@ -34,7 +34,7 @@ class WmiClientWrapper(object):
     it directly to end-users.
     """
 
-    def __init__(self, username="Administrator", password=None, host=None, namespace='//./root/cimv2', delimiter="\01"):
+    def __init__(self, username="Administrator", password=None, host=None, domain=None, namespace='//./root/cimv2', delimiter="\01"):
         assert username
         assert password
         assert host  # assume host is up
@@ -43,6 +43,7 @@ class WmiClientWrapper(object):
         self.username = username
         self.password = password
         self.host = host
+        self.domain = domain
 
         self.delimiter = delimiter
         self.namespace = namespace
@@ -56,9 +57,10 @@ class WmiClientWrapper(object):
 
         # the format is user%pass
         # NOTE: this is an injection vulnerability
-        userpass = "--user={username}%{password}".format(
+        userpass = "--user={domain}{username}%{password}".format(
             username=self.username,
             password=self.password,
+            domain = str(self.domain) + "/" if self.domain else "" 
         )
 
         arguments.append(userpass)

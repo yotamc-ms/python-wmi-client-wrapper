@@ -1,17 +1,15 @@
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import os
 import unittest
 from builtins import *
 
 import mock
-import wmi_client_wrapper as wmi
-
 from future import standard_library
 
-standard_library.install_aliases()
+import wmi_client_wrapper as wmi
 
+standard_library.install_aliases()
 
 datapath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data/")
 
@@ -30,7 +28,9 @@ class TestCases(unittest.TestCase):
             wmic = wmi.WmiClientWrapper(username="Administrator", password="password")
 
     def test_object_creation(self):
-        wmic = wmi.WmiClientWrapper(username="Administrator", password="password", host="192.168.1.173")
+        wmic = wmi.WmiClientWrapper(
+            username="Administrator", password="password", host="192.168.1.173"
+        )
 
     def test_delimiter_in_setup(self):
         expected_delimiter = "FOOBAR"

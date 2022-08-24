@@ -1,6 +1,7 @@
 # python-wmi-client-wrapper (forked for Python3 support)
 
-NOTE: This repo contains a fork from [python-wmi-client-wrapper](https://github.com/kanzure/python-wmi-client-wrapper) by [kanzure](https://github.com/kanzure); the only modifications are the addition of Python3 support.
+NOTE: This repo contains a fork from [python-wmi-client-wrapper](https://github.com/kanzure/python-wmi-client-wrapper)
+by [kanzure](https://github.com/kanzure); the only modifications are the addition of Python3 support.
 
 To install this forked version:
 

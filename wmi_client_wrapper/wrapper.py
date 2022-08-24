@@ -4,8 +4,7 @@ Houses the wrapper for wmi-client.
 There are a handful of injection vulnerabilities in this, so don't expose it
 directly to end-users.
 """
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import csv
 from builtins import *
@@ -14,14 +13,15 @@ from io import StringIO
 from sys import version as python_version
 
 import sh
-
 from future import standard_library
 
 standard_library.install_aliases()
-version = tuple([int(x) for x in python_version.strip().split()[0].split('.')])
+version = tuple([int(x) for x in python_version.strip().split()[0].split(".")])
 
 if version < (3, 0, 0):
-    from past.types.oldstr import oldstr as str
+    from past.types.oldstr import (
+        oldstr as str,  # noqa because replacing a builtin is intended
+    )
 
 
 class WmiClientWrapper(object):
@@ -34,7 +34,15 @@ class WmiClientWrapper(object):
     it directly to end-users.
     """
 
-    def __init__(self, username="Administrator", password=None, host=None, domain=None, namespace='//./root/cimv2', delimiter="\01"):
+    def __init__(
+        self,
+        username="Administrator",
+        password=None,
+        host=None,
+        domain=None,
+        namespace="//./root/cimv2",
+        delimiter="\01",
+    ):
         assert username
         assert password
         assert host  # assume host is up
@@ -60,7 +68,7 @@ class WmiClientWrapper(object):
         userpass = "--user={domain}{username}%{password}".format(
             username=self.username,
             password=self.password,
-            domain = str(self.domain) + "/" if self.domain else "" 
+            domain=str(self.domain) + "/" if self.domain else "",
         )
 
         arguments.append(userpass)
@@ -81,7 +89,8 @@ class WmiClientWrapper(object):
         """
         return ["--delimiter={delimiter}".format(delimiter=self.delimiter)]
 
-    def _construct_query(self, klass):
+    @staticmethod
+    def _construct_query(klass):
         """
         Makes up a WMI query based on a given class.
         """
@@ -110,7 +119,9 @@ class WmiClientWrapper(object):
         arguments = setup + credentials + [queryx]
 
         # execute the command
-        output = sh.wmic(*arguments)
+        output = sh.wmic(  # noqa because sh has a funky metaprogramming interface
+            *arguments
+        )
 
         # just to be sure? sh is weird sometimes.
         output = str(output)
@@ -152,7 +163,7 @@ class WmiClientWrapper(object):
         for section in sections:
             # remove the first line because it has the query class
             section = "\n".join(section.split("\n")[1:])
-            section = section.replace('\r\n', '\\r\\n')
+            section = section.replace("\r\n", "\\r\\n")
 
             strio = StringIO(section)
 
@@ -179,6 +190,8 @@ class WmiClientWrapper(object):
         the output will always be an integer or will always be a string..
         """
 
+        output = None
+
         if isinstance(incoming, list):
             output = []
 
@@ -195,12 +208,22 @@ class WmiClientWrapper(object):
                     output[key] = True
                 elif value == "False":
                     output[key] = False
-                elif isinstance(value, str) and len(value) > 1 and value[0] == "(" and value[-1] == ")":
+                elif (
+                    isinstance(value, str)
+                    and len(value) > 1
+                    and value[0] == "("
+                    and value[-1] == ")"
+                ):
                     # convert to a list with a single entry
                     output[key] = [value[1:-1]]
                 elif isinstance(value, str):
                     output[key] = value
                 elif isinstance(value, dict):
                     output[key] = cls._fix_dictionary_output(value)
+
+        if output is None:
+            raise TypeError(
+                "incoming {} was neither a list nor a dict".format(repr(incoming))
+            )
 
         return output

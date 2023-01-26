@@ -65,7 +65,7 @@ setup(
     install_requires=[
         "mock==2.0.0",
         "sh==1.12.14",
-        "future==0.16.0",
+        "future==0.18.3",
     ],
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,

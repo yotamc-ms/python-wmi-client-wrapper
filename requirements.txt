@@ -5,4 +5,4 @@ mock==2.0.0
 sh==1.12.14
 
 # to assist with Py2 / Py3 compat
-future==0.16.0
+future==0.18.3
